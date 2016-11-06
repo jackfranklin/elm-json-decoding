@@ -8,26 +8,41 @@ import Json.Decode as Decode
 import UsersDecoder exposing (sportsDecoder)
 
 
-sportsFootballTrue =
+createSportsObject footballValue =
     Encode.encode 0
         (Encode.object
-            [ ( "sports"
-              , Encode.object
-                    [ ( "football", Encode.bool True )
-                    ]
-              )
+            [ ( "football", Encode.bool footballValue )
             ]
         )
+
+
+noFootballGivenObject =
+    Encode.encode 0 (Encode.object [])
+
+
+sportsDecoderTests : Test
+sportsDecoderTests =
+    describe "SportsDecoderTests"
+        [ test "when football is given true it is true" <|
+            \() ->
+                Expect.equal
+                    (Ok True)
+                    (Decode.decodeString sportsDecoder (createSportsObject True))
+        , test "when football is given false it is false" <|
+            \() ->
+                Expect.equal
+                    (Ok False)
+                    (Decode.decodeString sportsDecoder (createSportsObject False))
+        , test "when football is not given it is false" <|
+            \() ->
+                Expect.equal
+                    (Ok False)
+                    (Decode.decodeString sportsDecoder noFootballGivenObject)
+        ]
 
 
 all : Test
 all =
     describe "UsersDecoderTests"
-        [ describe "SportsDecoderTests"
-            [ test
-                "when football is given true it is true"
-              <|
-                \() ->
-                    Expect.equal (Ok True) (Decode.decodeString sportsDecoder sportsFootballTrue)
-            ]
+        [ sportsDecoderTests
         ]

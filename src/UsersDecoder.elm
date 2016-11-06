@@ -23,14 +23,11 @@ userDecoder =
 sportsDecoder : Decode.Decoder Bool
 sportsDecoder =
     Decode.map
-        (\val ->
-            case val of
-                Just x ->
-                    x
+        (Maybe.withDefault False)
+        footballValueDecoder
 
-                Nothing ->
-                    False
-        )
-        (Decode.maybe
-            (Decode.at [ "football" ] (Decode.oneOf [ Decode.bool, Decode.succeed False ]))
-        )
+
+footballValueDecoder : Decode.Decoder (Maybe Bool)
+footballValueDecoder =
+    Decode.maybe
+        (Decode.at [ "football" ] (Decode.oneOf [ Decode.bool, Decode.succeed False ]))
