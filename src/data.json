@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "name": "Jack",
+      "age": 24,
+      "description": "A person who writes Elm",
+      "languages": ["elm", "javascript"],
+      "sports": {
+        "football": true
+      }
+    },
+    {
+      "name": "Bob",
+      "age": 25,
+      "languages": ["ruby", "scala"],
+      "sports": {}
+    },
+    {
+      "name": "Alice",
+      "age": 23,
+      "description": "Alice sends secrets to Bob",
+      "languages": ["C", "scala", "elm"],
+      "sports": {
+        "football": false
+      }
+    }
+  ]
+}
