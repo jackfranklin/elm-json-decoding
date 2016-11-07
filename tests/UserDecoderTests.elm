@@ -2,10 +2,11 @@ module UserDecoderTests exposing (..)
 
 import Test exposing (..)
 import Expect
+import Types exposing (..)
 import String
 import Json.Encode as Encode
 import Json.Decode as Decode
-import UsersDecoder exposing (sportsDecoder)
+import UsersDecoder exposing (sportsDecoder, userDecoder)
 
 
 createSportsObject footballValue =
@@ -18,6 +19,41 @@ createSportsObject footballValue =
 
 noFootballGivenObject =
     Encode.encode 0 (Encode.object [])
+
+
+createNormalUser =
+    Encode.encode 0
+        (Encode.object
+            [ ( "name", Encode.string "jack" )
+            , ( "age", Encode.int 24 )
+            , ( "description", Encode.string "a person who likes elm" )
+            , ( "languages", Encode.list [ Encode.string "javascript" ] )
+            , ( "sports", Encode.object [ ( "football", Encode.bool True ) ] )
+            ]
+        )
+
+
+createUserWithNoDescription =
+    Encode.encode 0
+        (Encode.object
+            [ ( "name", Encode.string "jack" )
+            , ( "age", Encode.int 24 )
+            , ( "languages", Encode.list [ Encode.string "javascript" ] )
+            , ( "sports", Encode.object [ ( "football", Encode.bool True ) ] )
+            ]
+        )
+
+
+createUserWithNoSports =
+    Encode.encode 0
+        (Encode.object
+            [ ( "name", Encode.string "jack" )
+            , ( "age", Encode.int 24 )
+            , ( "description", Encode.string "a person who likes elm" )
+            , ( "languages", Encode.list [ Encode.string "javascript" ] )
+            , ( "sports", Encode.object [] )
+            ]
+        )
 
 
 sportsDecoderTests : Test
@@ -41,8 +77,30 @@ sportsDecoderTests =
         ]
 
 
+userDecoderTests : Test
+userDecoderTests =
+    describe "UserDecoderTests"
+        [ test "when given a user with all the fields" <|
+            \() ->
+                Expect.equal
+                    (Ok (User "jack" 24 (Just "a person who likes elm") [ "javascript" ] True))
+                    (Decode.decodeString userDecoder createNormalUser)
+        , test "a user who does not have a description" <|
+            \() ->
+                Expect.equal
+                    (Ok (User "jack" 24 Nothing [ "javascript" ] True))
+                    (Decode.decodeString userDecoder createUserWithNoDescription)
+        , test "a user with an empty sports object" <|
+            \() ->
+                Expect.equal
+                    (Ok (User "jack" 24 (Just "a person who likes elm") [ "javascript" ] False))
+                    (Decode.decodeString userDecoder createUserWithNoSports)
+        ]
+
+
 all : Test
 all =
     describe "UsersDecoderTests"
         [ sportsDecoderTests
+        , userDecoderTests
         ]
