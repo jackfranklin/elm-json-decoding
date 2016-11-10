@@ -30,4 +30,4 @@ sportsDecoder =
 footballValueDecoder : Decode.Decoder (Maybe Bool)
 footballValueDecoder =
     Decode.maybe
-        (Decode.at [ "football" ] (Decode.oneOf [ Decode.bool, Decode.succeed False ]))
+        (Decode.at [ "football" ] Decode.bool)
