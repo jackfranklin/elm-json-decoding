@@ -1,3 +1,6 @@
+Written for this tutorial, which you should read: http://elmplayground.com/decoding-json-in-elm-1
+
+
 This project was bootstrapped with [Create Elm App](https://github.com/halfzebra/create-elm-app).
 
 Below you will find some information on how to perform common tasks.  
