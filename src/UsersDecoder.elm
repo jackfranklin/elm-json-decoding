@@ -22,12 +22,8 @@ userDecoder =
 
 sportsDecoder : Decode.Decoder Bool
 sportsDecoder =
-    Decode.map
-        (Maybe.withDefault False)
-        footballValueDecoder
-
-
-footballValueDecoder : Decode.Decoder (Maybe Bool)
-footballValueDecoder =
-    Decode.maybe
-        (Decode.at [ "football" ] Decode.bool)
+    (Decode.oneOf
+        [ Decode.at [ "football" ] Decode.bool
+        , Decode.succeed False
+        ]
+    )
