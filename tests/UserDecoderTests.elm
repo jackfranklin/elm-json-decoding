@@ -9,6 +9,23 @@ import Json.Decode as Decode
 import UsersDecoder exposing (sportsDecoder, userDecoder)
 
 
+blogPostTests : Test
+blogPostTests =
+    describe "Tests for blog post examples"
+        [ test "decoding Jack" <|
+            \() ->
+                let
+                    userDecoder : Decode.Decoder { name : String }
+                    userDecoder =
+                        Decode.object1 (\name -> { name = name })
+                            (Decode.at [ "name" ] Decode.string)
+                in
+                    Expect.equal
+                        (Ok { name = "Jack" })
+                        (Decode.decodeString userDecoder """{"name": "Jack"}""")
+        ]
+
+
 sportsDecoderTests : Test
 sportsDecoderTests =
     describe "SportsDecoderTests"
@@ -86,4 +103,5 @@ all =
     describe "UsersDecoderTests"
         [ sportsDecoderTests
         , userDecoderTests
+        , blogPostTests
         ]
