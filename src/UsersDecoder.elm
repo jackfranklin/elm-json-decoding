@@ -11,7 +11,7 @@ usersDecoder =
 
 userDecoder : Decode.Decoder User
 userDecoder =
-    Decode.object5
+    Decode.map5
         User
         (Decode.at [ "name" ] Decode.string)
         (Decode.at [ "age" ] Decode.int)
