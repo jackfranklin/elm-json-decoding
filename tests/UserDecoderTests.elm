@@ -17,7 +17,7 @@ blogPostTests =
                 let
                     userDecoder : Decode.Decoder { name : String }
                     userDecoder =
-                        Decode.object1 (\name -> { name = name })
+                        Decode.map (\name -> { name = name })
                             (Decode.at [ "name" ] Decode.string)
                 in
                     Expect.equal
