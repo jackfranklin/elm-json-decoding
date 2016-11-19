@@ -2,15 +2,14 @@ module Data exposing (fetchUsers)
 
 import Http
 import Types exposing (..)
-import Task exposing (Task)
 import UsersDecoder exposing (usersDecoder)
 
 
-makeRequest : Task Http.Error (List User)
-makeRequest =
-    Http.get usersDecoder "/src/data.json"
+getData : Http.Request (List User)
+getData =
+    Http.get "/src/data.json" usersDecoder
 
 
 fetchUsers : Cmd Msg
 fetchUsers =
-    Task.perform Error NewData makeRequest
+    Http.send NewHttpData getData

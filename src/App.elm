@@ -7,11 +7,13 @@ import Types exposing (..)
 
 update msg model =
     case msg of
-        NewData users ->
-            ( { model | users = Just users }, Cmd.none )
+        NewHttpData result ->
+            case result of
+                Ok users ->
+                    ( { model | users = Just users }, Cmd.none )
 
-        Error e ->
-            ( { model | error = Just e }, Cmd.none )
+                Err e ->
+                    ( { model | error = Just e }, Cmd.none )
 
 
 init =

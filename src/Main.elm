@@ -1,10 +1,11 @@
 module Main exposing (..)
 
 import App exposing (..)
-import Html.App exposing (program)
+import Html exposing (program)
+import Types exposing (Model, Msg)
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
     program
         { view = view

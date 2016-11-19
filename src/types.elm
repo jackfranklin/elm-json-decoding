@@ -4,8 +4,7 @@ import Http
 
 
 type Msg
-    = NewData (List User)
-    | Error Http.Error
+    = NewHttpData (Result Http.Error (List User))
 
 
 type alias User =
@@ -18,6 +17,6 @@ type alias User =
 
 
 type alias Model =
-    { users : Maybe User
+    { users : Maybe (List User)
     , error : Maybe Http.Error
     }
